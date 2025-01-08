@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    {% block css_links %}{% endblock css_links %}
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body>
+
+    <div id="notifications"></div> 
+
+    <script>
+        const messages = [
+            {% for message in messages %}
+                {text: "{{ message }}", tag: "{{ message.tags }}"},
+            {% endfor %}
+        ];
+    </script> 
+
+    <style>
+        .notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #444;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: top 0.5s ease;
+            z-index: 1000;
+        }
+        .notification.show {
+            top: 20px;
+        }
+    </style>
+    
+    {% block body %}
+    {% endblock body %}
+    
+    
+    <script>
+        function showNotification(message, tag) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+    
+            if (tag === 'error') {
+                notification.style.backgroundColor = '#e74c3c';
+            } else if (tag === 'success') {
+                notification.style.backgroundColor = '#2ecc71';
+            }
+    
+            document.body.appendChild(notification);
+    
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
+        }
+    
+        messages.forEach(msg => showNotification(msg.text, msg.tag));
+    </script> 
+</body>
+</html>

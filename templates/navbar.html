@@ -1,0 +1,38 @@
+{% load hosts %}
+<nav>
+    {% if USE_SUBDOMAIN_ROUTING %}
+    <a href="{% host_url 'home' host 'app' %}">Home</a>
+
+    <a href="{% host_url 'posts' host 'blog' %}">Blog</a>
+
+    <a href="{% host_url 'signin' host 'account' %}">Accounts</a>   
+
+    {% if request.user.is_authenticated %}
+    <a href="{% host_url 'profile_page' host 'account' %}">Profile</a>
+    {% endif %}
+
+    {% else %}
+
+    <a href="{% url 'home' %}">Home</a>
+
+    <a href="{% url 'posts' %}">Blog</a>
+
+    <a href="{% url 'signin' %}">Accounts</a>
+
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'profile_page'  %}">Profile</a>
+    {% endif %}
+
+    {% endif %}
+
+</nav>
+
+{% comment %} {% if USE_SUBDOMAIN_ROUTING %}
+    <a href="https://{{ request.tenant.schema_name }}.yourdomain.com">
+        Tenant-specific Link
+    </a>
+{% else %}
+    <a href="/clients/{{ request.tenant.schema_name }}/">
+        Tenant-specific Link
+    </a>
+{% endif %} {% endcomment %}

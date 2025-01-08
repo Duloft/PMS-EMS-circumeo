@@ -1,0 +1,16 @@
+
+<h1>Properties</h1>
+<small>@ {{request.custom_user}}</small>
+<a href="{% url 'add_property' %}">Add New Property</a>
+<a href="{% url 'add_property_type' %}">Add Property type</a>
+<a href="{% url 'register' %}">Clients</a>
+<a href="{% url 'register' %}">Update Clients</a>
+<ul>
+    {% for property in properties %}
+    <li>
+        {{ property.title }} - {{ property.address }}
+        <a href="{% url 'update_property' property.pk %}">Edit</a>
+        <a href="{% url 'delete_property' property.pk %}">Delete</a>
+    </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,38 @@
+<!-- partials/units_table.html -->
+{% if units %}
+<div class="overflow-x-auto">
+    <table class="min-w-full">
+        <thead>
+            <tr>
+                <th class="px-4 py-2 text-left">Unit</th>
+                <th class="px-4 py-2 text-left">Type</th>
+                <th class="px-4 py-2 text-left">Status</th>
+                <th class="px-4 py-2 text-left">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for unit_data in units %}
+            <tr>
+                <td class="border px-4 py-2">{{ unit_data.unit.title }}</td>
+                <td class="border px-4 py-2">{{ unit_data.unit.type }}</td>
+                <td class="border px-4 py-2">
+                    <span class="px-2 py-1 rounded-full text-sm 
+                        {% if unit_data.unit.status == 'active' %}bg-green-100 text-green-800
+                        {% else %}bg-gray-100 text-gray-800{% endif %}">
+                        {{ unit_data.unit.status|title }}
+                    </span>
+                </td>
+                <td class="border px-4 py-2">
+                    <a href="{% url 'unit_details' schema_name=unit_data.schema_name unit_id=unit_data.unit.id %}" 
+                       class="text-blue-600 hover:text-blue-800">
+                        View Details
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p class="text-gray-600">No units found.</p>
+{% endif %}

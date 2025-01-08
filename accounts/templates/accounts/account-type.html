@@ -1,0 +1,47 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block title %}Duloft | Signin to your account{% endblock title %}
+
+{% block form_heading %}Choose account type{% endblock form_heading %}
+
+{% block form_contents %}
+    <div class="account-type-cont">
+        <a href="{% url 'signup' %}?type=property-manager">
+            <div class="sect1">
+                <img src="{% static 'icons/puzzle.png' %}" alt="">
+                <p>Property Managers Account</p>
+            </div>
+        </a>
+        <a href="{% url 'signup' %}?type=tenant" class="sect2">
+            <div >
+                <img src="{% static 'icons/timmer.png' %}" alt="">
+                <p>Tenant Account</p>
+            </div>
+        </a>
+    </div>
+{% endblock form_contents %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends 'base.html' %}
+{% block title %}Duloft | Auth{% endblock title %}
+
+
+{% block body %}
+
+    <!-- Account type page -->
+    <h3>Select account type</h3>
+    <p>Tenant</p></a>
+    <p>Property Manager</p></a>
+    
+{% endblock body %} {% endcomment %}

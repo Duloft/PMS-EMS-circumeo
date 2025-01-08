@@ -1,0 +1,80 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block title %}Duloft | sign-in to your account{% endblock title %}
+
+{% block form_heading %}Sign In{% endblock form_heading %}
+
+{% block form_contents %}
+    <form method="POST" class="signUpForm">
+        {% csrf_token %}
+    
+        <!-- Username -->
+        <label for="signup_username">Email/Username <span class="error">*</span></label>  
+        <input type="text" id="username" name="signin_id" placeholder="Enter Email or Username" autocomplete="username">
+    
+        <!-- Password -->
+        <label for="signup_password">Password <span class="error">*</span></label>
+        <div class="passwordInput">
+            <input type="password" name="signin_password" placeholder="Enter Password" class="password" id="password" autocomplete="new-password">
+            <div class="showPasswordIcon"><img src="./icons/hide-password.png" alt="" id="showPasswordIcon"></div>
+        </div>
+        <small id="error_password" class="error-message"></small>
+        <small><a href="{% url 'password_reset' %}" class="a forgottenPassword">Forgotten Password?</a></small>
+        <button type="submit" class="primary-btn">Sign In</button>
+    </form>
+
+    <div class="divider-container">
+        <hr class="divider-line">
+        <span class="divider-text">or</span>
+        <hr class="divider-line">
+    </div>
+
+    <div class="auth-social-cont">
+        <div class="socialSignin google-signin">
+            <a href="{% url 'social:begin' 'google-oauth2' %}">
+                    <img src="{% static 'icons/google-logo.png' %}" alt="">
+                    <p>Continue with Google</p>
+            </a>
+        </div>
+        <div class="socialSignin facebook-signin">
+            <a href="{% url 'social:begin' 'facebook' %}">
+                    <img src="{% static 'icons/facebook-logo.png' %}" alt="">
+                    <p>Continue with Facebook</p>
+            </a>
+        </div>
+        <a href="{% url 'account_type' %}"><button class="secondary-btn">Sign up</button></a>
+    </div>
+    <small class="bottom-txt">By using Duloft, you agree to our use of <a href="" class="a">cookies</a> and data processing, as outlined in our <a href="" class="a">Terms of Use</a> and <a href="" class="a">Privacy Policy</a>.</small>
+{% endblock form_contents %}
+
+
+{% comment %} 
+{% block body %}
+
+<!-- Signin page -->
+
+<h3>Sign in</h3>
+
+
+
+<br>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <!-- Email -->
+    <label for="signin_email">Email*</label>
+    <input type="text" id="email" name="signin_id" placeholder="Enter Email or Username" autocomplete="email">
+    <br><br>    
+    <!-- Password -->
+    <label for="signin_password">Password*</label>
+    <input type="password" id="password" name="signin_password" placeholder="Enter Password" autocomplete="new-password">
+    <br><br>    
+
+    <button type="submit">Sign In</button>
+</form>
+<br>
+<small>Forgot your password? <a href="{% url 'password_reset' %}">click here</a> to reset</small>
+<br><small>Don't have an account? <a href="{% url 'account_type' %}">signup</a></small>
+
+{% endblock body %} {% endcomment %}

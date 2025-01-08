@@ -1,0 +1,43 @@
+<h1>{% if unit %}Edit Unit{% else %}Add Unit{% endif %}</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="property_id">Property:</label>
+    <select id="property_id" name="property_id" required>
+        <option value="">-- Select Property --</option>
+        {% for property in properties %}
+        <option value="{{ property.id }}" {% if unit and unit.property_id_id == property.id %}selected{% endif %}>
+            {{ property.title }}
+        </option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" value="{{ unit.title|default:'' }}" required>
+    <br>
+    <label for="unit_number">Unit Number:</label>
+    <input type="text" id="unit_number" name="unit_number" value="{{ unit.unit_number|default:'' }}" required>
+    <br>
+    <label for="price_per_year">Price per Year:</label>
+    <input type="number" id="price_per_year" name="price_per_year" step="0.01" value="{{ unit.price_per_year|default:'' }}" required>
+    <br>
+    <label for="accommodation_type">Accommodation Type:</label>
+    <select id="accommodation_type" name="accommodation_type">
+        <option value="">-- Select Accommodation Type --</option>
+        {% for accommodation_type in accommodation_types %}
+        <option value="{{ accommodation_type.id }}" {% if unit and unit.accommodation_type_id == accommodation_type.id %}selected{% endif %}>
+            {{ accommodation_type.name }}
+        </option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="taken">Taken:</label>
+    <input type="checkbox" id="taken" name="taken" {% if unit and unit.taken %}checked{% endif %}>
+    <br>
+    <label for="tenant_id">Tenant ID:</label>
+    <input type="text" id="tenant_id" name="tenant_id" value="{{ unit.tenant_id|default:'' }}">
+    <br>
+    <label for="list_property">List Property:</label>
+    <input type="checkbox" id="list_property" name="list_property" {% if unit and unit.list_property %}checked{% endif %}>
+    <br>
+    <button type="submit">Save</button>
+</form>

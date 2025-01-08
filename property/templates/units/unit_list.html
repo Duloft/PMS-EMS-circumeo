@@ -1,0 +1,29 @@
+<h1>Units</h1>
+<a href="{% url 'add_unit' %}">Add New Unit</a>
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Property</th>
+            <th>Unit Number</th>
+            <th>Price per Year</th>
+            <th>Taken</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for unit in units %}
+        <tr>
+            <td>{{ unit.title }}</td>
+            <td>{{ unit.property_id.title }}</td>
+            <td>{{ unit.unit_number }}</td>
+            <td>{{ unit.price_per_year }}</td>
+            <td>{{ unit.taken }}</td>
+            <td>
+                <a href="{% url 'unit_update' unit.pk %}">Edit</a>
+                <a href="{% url 'unit_delete' unit.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

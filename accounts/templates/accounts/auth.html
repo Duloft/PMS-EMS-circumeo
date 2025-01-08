@@ -1,0 +1,339 @@
+{% extends 'base.html' %}
+{% block title %}Duloft | Auth{% endblock title %}
+
+
+{% block body %}
+{% if page == "signup" %}
+<!-- Signup page-->
+
+    <!-- Tenant's account signup page -->
+    {% if type == 'tenant' %}
+
+    <h3>Tenant Account</h3>
+    
+    {% comment %} {% if messages %}
+    {% for message in messages %}
+    {{ message }} 
+    {% endfor %}
+    {% endif %} {% endcomment %}
+
+    <div id="notifications"></div>
+
+    <style>
+        #notifications {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    
+        .notification {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            min-width: 300px;
+            max-width: 400px;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            background: #333;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            animation: slideIn 0.5s ease, fadeOut 0.5s ease 2.5s forwards;
+            overflow: hidden;
+        }
+    
+        .notification.success {
+            background: #28a745;
+        }
+    
+        .notification.error {
+            background: #dc3545;
+        }
+    
+        .notification.warning {
+            background: #ffc107;
+            color: #000;
+        }
+    
+        .notification .close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            margin-left: 15px;
+            cursor: pointer;
+        }
+    
+        .notification .close-btn:hover {
+            color: #ddd;
+        }
+    
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.8);
+            animation: progress 2.5s linear forwards;
+        }
+    
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+    
+        @keyframes progress {
+            from {
+                width: 100%;
+            }
+            to {
+                width: 0;
+            }
+        }
+    </style>
+
+    <script>
+        function showNotification(message, type = 'success') {
+            const container = document.getElementById('notifications');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+    
+            // Add the message text
+            const messageText = document.createElement('span');
+            messageText.textContent = message;
+    
+            // Add the close button
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'close-btn';
+            closeBtn.textContent = '×';
+            closeBtn.onclick = () => notification.remove();
+    
+            // Add the progress bar
+            const progressBar = document.createElement('div');
+            progressBar.className = 'progress-bar';
+    
+            // Append all elements
+            notification.appendChild(messageText);
+            notification.appendChild(closeBtn);
+            notification.appendChild(progressBar);
+            container.appendChild(notification);
+    
+            // Auto-remove after animation ends
+            notification.addEventListener('animationend', () => {
+                if (notification.style.opacity === '0') {
+                    notification.remove();
+                }
+            });
+    
+            // Optional: Remove after a fixed timeout (if no user interaction)
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    notification.remove();
+                }
+            }, 3000); // Adjust duration as needed
+        }
+    
+        // Simulate Django messages
+        const messages = [
+            {% for message in messages %}
+                { text: "{{ message }}", type: "{{ message.tags }}" },
+            {% endfor %}
+        ];
+    
+        messages.forEach(msg => showNotification(msg.text, msg.type));
+    </script>
+    
+
+
+    <p><a href="">G Continue with Google</a></p>
+    <p><a href="">F Continue with Facebook</a></p>
+
+    <br>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- First Name -->
+        <label for="signup_first_name">First Name*</label>
+        <input type="text" id="first_name" name="signup_firstname" placeholder="Enter Firstname" autocomplete="given-name">
+        <div id="error_first_name" class="error-message"></div>
+        <br>
+
+        <!-- Last Name -->
+        <label for="signup_last_name">Last Name*</label>
+        <input type="text" id="last_name" name="signup_lastname" placeholder="Enter Lastname" autocomplete="family-name">
+        <div id="error_last_name" class="error-message"></div>
+        <br>
+
+        <!-- Username -->
+        <label for="signup_username">Username*</label>
+        <input type="text" id="username" name="signup_username" placeholder="Enter Username" autocomplete="username">
+        <div id="error_username" class="error-message"></div>
+        <br>
+
+        <!-- Email -->
+        <label for="signup_email">Email*</label>
+        <input type="email" id="email" name="signup_email" placeholder="Enter Email" autocomplete="email">
+        <div id="error_email" class="error-message"></div>
+        <br>
+
+        <!-- Password -->
+        <label for="signup_password">Password*</label>
+        <input type="password" id="password" name="signup_password" placeholder="Enter Password" autocomplete="new-password">
+        <div id="error_password" class="error-message"></div>
+        <br>
+
+        <!-- Confirm Password -->
+        <label for="signup_confirm_password">Confirm Password*</label>
+        <input type="password" id="confirm_password" name="signup_confirm_password" placeholder="Enter Password again" autocomplete="new-password">
+        <div id="error_confirm_password" class="error-message"></div>
+        <br>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <br><small>Already have an account? <a href="{% url 'signin' %}">signin</a></small>
+
+    {% elif type == 'property-manager' %}
+
+    <!-- Property manager's account signup page -->
+    <h3>Property Manager's Account</h3>
+
+    {% if messages %}
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+    {% endif %}
+
+    <p><a href="">G Continue with Google</a></p>
+    <p><a href="">F Continue with Facebook</a></p>
+
+    <br>
+
+    <form id="signupForm" method="post">
+        {% csrf_token %}
+    
+        <!-- First Name -->
+        <label for="signup_first_name">First Name*</label>
+        <input type="text" id="first_name" name="signup_firstname" placeholder="Enter Firstname" autocomplete="given-name">
+        <div id="error_first_name" class="error-message"></div>
+        <br>
+    
+        <!-- Last Name -->
+        <label for="signup_last_name">Last Name*</label>
+        <input type="text" id="last_name" name="signup_lastname" placeholder="Enter Lastname" autocomplete="family-name">
+        <div id="error_last_name" class="error-message"></div>
+        <br>
+    
+        <!-- Username -->
+        <label for="signup_username">Username*</label>
+        <input type="text" id="username" name="signup_username" placeholder="Enter Username" autocomplete="username">
+        <div id="error_username" class="error-message"></div>
+        <br>
+    
+        <!-- Email -->
+        <label for="signup_email">Email*</label>
+        <input type="email" id="email" name="signup_email" placeholder="Enter Email" autocomplete="email">
+        <div id="error_email" class="error-message"></div>
+        <br>
+    
+        <!-- Phone Number -->
+        <label for="signup_phone_number">Phone Number*</label>
+        <input type="tel" id="phone_number" name="signup_phone_number" placeholder="Enter Phone Number" autocomplete="tel">
+        <div id="error_phone_number" class="error-message"></div>
+        <br>
+    
+        <!-- Password -->
+        <label for="signup_password">Password*</label>
+        <input type="password" id="password" name="signup_password" placeholder="Enter Password" autocomplete="new-password">
+        <div id="error_password" class="error-message"></div>
+        <br>
+    
+        <!-- Confirm Password -->
+        <label for="signup_confirm_password">Confirm Password*</label>
+        <input type="password" id="confirm_password" name="signup_confirm_password" placeholder="Enter Password again" autocomplete="new-password">
+        <div id="error_confirm_password" class="error-message"></div>
+        <br>
+    
+        <button type="submit">Sign Up</button>
+    </form>
+    
+
+    
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+    
+    <br><small>Already have an account? <a href="{% url 'signin' %}">signin</a></small>
+
+    {% else %}
+
+    <!-- Account type page -->
+    <h3>Select account type</h3>
+    <a href="{% url 'signup' %}?type=tenant"><p>Tenant</p></a>
+    <a href="{% url 'signup' %}?type=property-manager"><p>Property Manager</p></a>
+
+    {% endif %}
+        
+{% else %}
+
+<!-- Signin page -->
+
+<h3>Sign in</h3>
+
+{% if messages %}
+{% for message in messages %}
+{{ message }} 
+{% endfor %}
+{% endif %}
+
+<p><a href="{% url 'social:begin' 'google-oauth2' %}">G Continue with Google</a></p>
+<p><a href="{% url 'social:begin' 'facebook' %}">F Continue with Facebook</a></p>
+
+<br>
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    <!-- Email -->
+    <label for="signin_email">Email*</label>
+    <input type="text" id="email" name="signin_id" placeholder="Enter Email or Username" autocomplete="email">
+    <br><br>    
+    <!-- Password -->
+    <label for="signin_password">Password*</label>
+    <input type="password" id="password" name="signin_password" placeholder="Enter Password" autocomplete="new-password">
+    <br><br>    
+
+    <button>Sign In</button>
+</form>
+<br>
+<small>Forgot your password? <a href="{% url 'password_reset' %}">click here</a> to reset</small>
+<br><small>Don't have an account? <a href="{% url 'signup' %}">signup</a></small>
+{% endif %}
+{% endblock body %}
+
+<!-- If page is signup then display the signup page else display the siginpage -->
+<!-- Now if the page is signup, check if its a property-manager's account and then display the property manager's account creation form -->
+<!-- If it's not a property manager's account, check if it is a tenant's account and display the tenant's account creation form -->
+<!-- Now if it's neither a property-manager or tenant's account then display the seclect account type page -->

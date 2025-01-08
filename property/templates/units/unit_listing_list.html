@@ -1,0 +1,31 @@
+<h1>Unit Listings</h1>
+<a href="{% url 'unit_listing_create' %}">Add New Unit Listing</a>
+<table>
+    <thead>
+        <tr>
+            <th>Unit</th>
+            <th>Description</th>
+            <th>No. of Baths</th>
+            <th>Features</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for listing in unit_listings %}
+        <tr>
+            <td>{{ listing.unit_model.title }}</td>
+            <td>{{ listing.description }}</td>
+            <td>{{ listing.no_of_baths }}</td>
+            <td>
+                {% for feature in listing.features.all %}
+                {{ feature.name }},
+                {% endfor %}
+            </td>
+            <td>
+                <a href="{% url 'unit_listing_update' listing.pk %}">Edit</a>
+                <a href="{% url 'unit_listing_delete' listing.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

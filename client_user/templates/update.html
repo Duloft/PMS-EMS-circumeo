@@ -1,0 +1,45 @@
+<div class="container">
+    <h1>{{ title }}</h1>
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="role" class="form-label">Role*</label>
+            <select class="form-select" id="role" name="role" required>
+                <option value="">Select Role</option>
+                {% for role_value, role_name in roles %}
+                <option value="{{ role_value }}" {% if client_user.role == role_value %}selected{% endif %}>
+                    {{ role_name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="tenant" class="form-label">Tenant</label>
+            <select class="form-select" id="tenant" name="tenant">
+                <option value="">Select Tenant</option>
+                {% for tenant in tenants %}
+                <option value="{{ tenant.id }}" {% if client_user.tenant.id == tenant.id %}selected{% endif %}>
+                    {{ tenant.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="phone_number" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phone_number" name="phone_number" 
+                   value="{{ client_user.phone_number|default:'' }}">
+        </div>
+        
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="is_admin" name="is_admin"
+                   {% if client_user.is_admin %}checked{% endif %}>
+            <label class="form-check-label" for="is_admin">Is Admin</label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Update Employee</button>
+        <a href="{% url 'client_users_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

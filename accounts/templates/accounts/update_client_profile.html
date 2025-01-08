@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Duloft | Update your profile{% endblock title %}
+
+
+{% block body %}
+<h3>Update your profile</h3>
+<!-- Client's account update Profile form -->
+
+{% if messages %}
+{% for message in messages %}
+{{ message }}
+{% endfor %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    
+    <!-- Account Type -->
+    <label for="account_type">Account Type:</label>
+    <select name="account_type" id="account_type">
+        <option value="" disabled {% if not profile.account_type %}selected{% endif %}>Select Account Type</option>
+        <option value="Estate Management Company" {% if profile.account_type == "Estate Management Company" %}selected{% endif %}>Estate Management Company</option>
+        <option value="Property Management Company" {% if profile.account_type == "Property Management Company" %}selected{% endif %}>Property Management Company</option>
+        <option value="LandLord" {% if profile.account_type == "LandLord" %}selected{% endif %}>LandLord</option>
+        <option value="Property Manager" {% if profile.account_type == "Property Manager" %}selected{% endif %}>Property Manager</option>
+    </select> 
+    <br><br>
+    
+    <!-- Account Name -->
+    <label for="account_name">Account Name:</label>
+    <input type="text" id="account_name" name="account_name" placeholder="Enter Account Name" {% if profile.account_name %} value="{{profile.account_name}}"{% endif %} autocomplete="organization"> <br><br>
+    
+    <!-- Domain Name -->
+    {% if not profile.domain_name %}
+    <label for="domain_name">Domain Name:</label>
+    <input type="text" id="domain_name" name="domain_name" placeholder="Enter Domain Name" {% if profile.domain_name %} value="{{profile.domain_name}}"{% endif %} autocomplete="off"> <br><br>
+    {% endif %}
+    <!-- Head Office Address -->
+    <label for="head_office_address">Head Office Address:</label>
+    <input type="text" id="head_office_address" name="head_office_address" placeholder="Enter Head Office Address" {% if profile.address %} value="{{profile.address}}"{% endif %} autocomplete="street-address"> <br><br>
+    
+    <!-- Branch Office Address -->
+    <label for="branch_office_address">Branch Office Address:</label>
+    <input type="text" id="branch_office_address" name="branch_office_address" placeholder="Enter Branch Office Address" {% if profile.branch_address %} value="{{profile.branch_address}}"{% endif %} autocomplete="street-address"> <br><br>
+    
+    <button type="submit">Update Profile</button>
+</form>
+
+{% endblock body %}

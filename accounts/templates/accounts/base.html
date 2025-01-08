@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_links %}
+    <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/media.css' %}">
+{% endblock css_links %}
+
+
+{% block body %}
+
+<div class="auth-page">
+    <div class="brand-sect">
+        <div>
+            <a href=""><img src="{% static 'images/primary-logo.png' %}" alt=""></a>
+        </div>
+        <p>Manage Smarter,</p>
+        <p>Rent faster.</p>
+    </div>
+
+    <div class="form-sect">
+
+            <h3>{% block form_heading %}{% endblock form_heading %}</h3>
+
+            
+            {% block form_contents %}{% endblock form_contents %}
+
+        </div>
+</div>
+
+{% endblock body %}

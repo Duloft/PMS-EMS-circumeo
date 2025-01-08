@@ -1,0 +1,93 @@
+<!-- main_dashboard.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mx-auto p-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Revenue Cards -->
+        <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Monthly Revenue</h3>
+            <p class="text-2xl font-bold">NGN {{ monthly_revenue|floatformat:2 }}</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Yearly Revenue</h3>
+            <p class="text-2xl font-bold">NGN {{ yearly_revenue|floatformat:2 }}</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Monthly Income</h3>
+            <p class="text-2xl font-bold">NGN {{ fees_record_income|floatformat:2 }}</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-2">Monthly Expenses</h3>
+            <p class="text-2xl font-bold">NGN {{ expense_record_outgoing|floatformat:2 }}</p>
+        </div>
+    </div>
+
+    <!-- Property & Units Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-4">Properties Overview</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <p class="text-gray-600">Total Properties</p>
+                    <p class="text-xl font-bold">{{ properties.count }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-600">Active Properties</p>
+                    <p class="text-xl font-bold">{{ active_properties|length }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold mb-4">Units Overview</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <p class="text-gray-600">Total Units</p>
+                    <p class="text-xl font-bold">{{ units.count }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-600">Vacant Units</p>
+                    <p class="text-xl font-bold">{{ vacant_units.count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Maintenance Requests -->
+    <div class="bg-white p-4 rounded-lg shadow mt-6">
+        <h3 class="text-lg font-semibold mb-4">Maintenance Requests</h3>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <p class="text-gray-600">Total Requests</p>
+                <p class="text-xl font-bold">{{ maintenance_request }}</p>
+            </div>
+            <div>
+                <p class="text-gray-600">Active Requests</p>
+                <p class="text-xl font-bold">{{ active_maintenance_request }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Property Payments Table -->
+    <div class="bg-white p-4 rounded-lg shadow mt-6">
+        <h3 class="text-lg font-semibold mb-4">Property Payments</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2 text-left">Property</th>
+                        <th class="px-4 py-2 text-left">Total Payments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in list_property_payment %}
+                    <tr>
+                        <td class="border px-4 py-2">{{ payment.property }}</td>
+                        <td class="border px-4 py-2">NGN {{ payment.total_payment|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

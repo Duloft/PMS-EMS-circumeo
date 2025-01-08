@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mx-auto p-4">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="mb-4 p-4 rounded-lg {% if message.tags == 'error' %}bg-red-100 text-red-700{% elif message.tags == 'warning' %}bg-yellow-100 text-yellow-700{% else %}bg-blue-100 text-blue-700{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if shared_id %}
+        <!-- Client Selection -->
+        {% if clients_data %}
+            <div class="bg-white p-4 rounded-lg shadow mb-6">
+                <form method="get" class="flex items-center space-x-4">
+                    <select name="client" class="form-select rounded-md border-gray-300 flex-1">
+                        <option value="">All Properties</option>
+                        {% for client_data in clients_data %}
+                            <option value="{{ client_data.client.id }}" 
+                                    {% if selected_client == client_data.client.id|stringformat:"s" %}selected{% endif %}>
+                                {{ client_data.client.name }} ({{ client_data.units|length }} units)
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        View Properties
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-2">Total Properties</h3>
+                <p class="text-2xl font-bold">{{ total_units }}</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-2">Active Leases</h3>
+                <p class="text-2xl font-bold">{{ total_leases }}</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-2">Property Managers</h3>
+                <p class="text-2xl font-bold">{{ clients_data|length }}</p>
+            </div>
+        </div>
+
+        <!-- Properties Table -->
+        {% if selected_client %}
+            <div class="bg-white p-4 rounded-lg shadow mb-6">
+                <h3 class="text-xl font-semibold mb-4">Your Properties with {{ selected_units.0.client_name }}</h3>
+                {% include "partials/units_table.html" with units=selected_units %}
+            </div>
+        {% else %}
+            <!-- Show all properties -->
+            {% for client_data in clients_data %}
+                <div class="bg-white p-4 rounded-lg shadow mb-6">
+                    <h3 class="text-xl font-semibold mb-4">Properties with {{ client_data.client.name }}</h3>
+                    {% include "partials/units_table.html" with units=client_data.units %}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Leases Table -->
+        {% if selected_client %}
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h3 class="text-xl font-semibold mb-4">Active Leases with {{ selected_leases.0.client_name }}</h3>
+                {% include "partials/leases_table.html" with leases=selected_leases %}
+            </div>
+        {% else %}
+            <!-- Show all leases -->
+            {% for client_data in clients_data %}
+                <div class="bg-white p-4 rounded-lg shadow mb-6">
+                    <h3 class="text-xl font-semibold mb-4">Leases with {{ client_data.client.name }}</h3>
+                    {% include "partials/leases_table.html" with leases=client_data.leases %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% else %}
+        <div class="bg-white p-4 rounded-lg shadow text-center">
+            <p class="text-xl text-gray-600">No tenant profile found.</p>
+            <p>Please contact property management if you believe this is an error.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+<h1>{% if property_listing %}Edit Property{% else %}Add Property{% endif %}</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="on_sale">For Sale:</label>
+    <input type="checkbox" id="on_sale" name="on_sale" {% if property_listing and property_listing.on_sale %}checked{% endif %}>
+    <br>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description">{{ property_listing.description|default:'' }}</textarea>
+    <br>
+    <label for="features">Features:</label>
+    <select id="features" name="features" multiple>
+        {% for feature in features %}
+        <option value="{{ feature.id }}" {% if property_listing and feature in property_listing.features.all %}selected{% endif %}>
+            {{ feature.name }}
+        </option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="property_price">Price:</label>
+    <input type="text" id="property_price" name="property_price" value="{{ property_listing.property_price|default:'' }}">
+    <br>
+    <label for="vid_file">Video:</label>
+    <input type="file" id="vid_file" name="vid_file">
+    <br>
+    <button type="submit">Save</button>
+</form>

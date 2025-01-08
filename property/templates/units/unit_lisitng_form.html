@@ -1,0 +1,36 @@
+<h1>{% if unit_listing %}Edit Unit Listing{% else %}Add Unit Listing{% endif %}</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="unit_model">Unit:</label>
+    <select id="unit_model" name="unit_model" required>
+        <option value="">-- Select Unit --</option>
+        {% for unit in units %}
+        <option value="{{ unit.id }}" {% if unit_listing and unit_listing.unit_model_id == unit.id %}selected{% endif %}>
+            {{ unit.title }}
+        </option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description">{{ unit_listing.description|default:'' }}</textarea>
+    <br>
+    <label for="no_of_baths">No. of Baths:</label>
+    <input type="number" id="no_of_baths" name="no_of_baths" value="{{ unit_listing.no_of_baths|default:'' }}" required>
+    <br>
+    <label for="features">Features:</label>
+    <select id="features" name="features" multiple>
+        {% for amenity in amenities %}
+        <option value="{{ amenity.id }}" {% if unit_listing and amenity in unit_listing.features.all %}selected{% endif %}>
+            {{ amenity.name }}
+        </option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="vid_file">Video File:</label>
+    <input type="file" id="vid_file" name="vid_file">
+    {% if unit_listing and unit_listing.vid_file %}
+    <p>Current Video: {{ unit_listing.vid_file.url }}</p>
+    {% endif %}
+    <br>
+    <button type="submit">Save</button>
+</form>

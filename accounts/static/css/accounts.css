@@ -1,0 +1,228 @@
+/* Background */
+.auth-page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                    url('./account-section-bg.png');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+
+.auth-page .brand-sect img{
+    width: 15rem;
+}
+
+.auth-page .brand-sect p{
+    color: var(--white);
+    font-size: 3em;
+    font-weight: 650;
+    line-height: .3;
+}
+
+/* Authentication form */
+
+.form-sect {
+    width: 30rem;
+    min-height: 90vh;
+    background-color: var(--form-bg);
+    padding: var(--spacing-xl) var(--spacing-xl);
+    border-radius: 2rem;
+    box-shadow: 0 12px 20px var(--dark-shadow);
+}
+
+.passwordInput,
+.form-sect input, 
+.form-sect button{
+    border: 1px solid var(--line-color);
+    width: 100%;
+    height: 2.7rem;
+    border-radius: .45rem;
+    transition: border-color var(--normal-transition);
+}
+
+.passwordInput:focus-within,
+.form-sect input:focus{
+    border-color: var(--primary-color);
+    
+}
+
+.doubleFields{
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+.doubleFields .div{
+    width: 50%;
+}
+
+.form-sect button{
+    box-shadow: 0 4px 6px var(--light-shadow); 
+    margin-top: 1rem;
+}
+
+
+.passwordInput{
+    display: flex;
+    width: 100%;
+    padding-right: 0.6rem;
+    background-color: white;
+}
+
+.passwordInput input{
+    width: 90%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+}
+
+.passwordInput .showPasswordIcon{
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.passwordInput .showPasswordIcon img{
+    width: 1rem;
+    height: auto;   
+    cursor: pointer;
+}
+
+.passwordInput .showPasswordIcon img:active{
+    opacity: .5;
+    transition: var(--normal-transition);
+}
+
+.form-sect .bottom-txt{
+    display: block;
+    margin-top: var(--spacing-m);
+    line-height: 1rem;
+}
+
+.error-message{
+    width: 100%;
+    color: red;
+    display: block;
+    margin-top: .2rem;
+}
+
+/* Account Type  */
+
+.account-type-cont{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    align-items: center;
+    margin-top: var(--spacing-xxl);
+}
+
+.account-type-cont img{
+    width: 3rem;
+    margin-bottom: var(--spacing-s);
+}
+
+.account-type-cont div{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    border: .1em solid var(--primary-color);
+    border-radius: .5rem;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.account-type-cont .sect1{
+    background-color: var(--primary-color-20);
+}
+
+/* Signup page */
+
+.agreement{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
+    margin-top: var(--spacing-s);
+}
+
+/* Sign in Page */
+
+.divider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.divider-line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: var(--line-color);
+    border: none;
+    margin: 0 10px;
+}
+
+.divider-text {
+    font-size: 1em;
+    color: var(--aside-color);
+}
+
+.auth-social-cont{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+}
+
+.socialSignin{
+    display: flex;
+    justify-content: center;
+    height: 2.7rem;
+    cursor: pointer;
+}
+
+.socialSignin:hover{
+    background-color: #f0f4f8;
+}
+
+.socialSignin a{
+    width: 65%;
+    display: flex;
+    align-items: center;    
+    gap: .8rem;
+}
+
+.socialSignin img{
+    width: 1.5rem;
+    height: 1.5em;
+}
+
+/* .socialSignin a{
+    width: 100%;
+    margin: auto;
+} */
+
+.socialSignin p{
+    font-size: 1em;
+    color: var(--placeholder-text);
+}
+
+.google-signin{
+    border: 2px solid #e89c3121;
+}
+
+.facebook-signin{
+    border: 2px solid #0000ff17;
+}
+
+.auth-social-cont button{
+    height: 2.3rem;
+    margin: 0rem;
+    box-shadow: none;
+}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Duloft | Update your profile{% endblock title %}
+
+
+{% block body %}
+<h3>Update your profile</h3>
+
+<!-- Tenant's account update profile form -->
+
+{% if messages %}
+{% for message in messages %}
+{{ message }}
+{% endfor %}
+{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- ID Type -->
+    <label for="id_type">ID Type:</label>
+    <select name="id_type" id="id_type">
+        <option value="" disabled {% if not profile.id_type %}selected{% endif %}>Select ID Type</option>
+        <option value="nin" {% if profile.id_type == "nin" %}selected{% endif %}>NIN</option>
+        <option value="vnin" {% if profile.id_type == "vnin" %}selected{% endif %}>vNIN</option>
+        <option value="voter's card" {% if profile.id_type == "voter's card" %}selected{% endif %}>Voter's Card</option>
+        <option value="driver's license" {% if profile.id_type == "driver's license" %}selected{% endif %}>Driver's License</option>
+        <option value="international passport" {% if profile.id_type == "international passport" %}selected{% endif %}>International Passport</option>
+    </select>
+    <br><br>
+
+    <!-- Valid ID Number -->
+    <label for="valid_id_number">Valid ID Number:</label>
+    <input type="text" id="valid_id_number" name="valid_id_number" placeholder="Enter valid ID number" {% if profile.valid_id_number %} value="{{ profile.valid_id_number }}" {% endif %}>
+    <br><br>
+
+    <!-- Date of Birth -->
+    <label for="date_of_birth">Date of Birth:</label>
+    <input type="date" id="date_of_birth" name="date_of_birth" {% if profile.date_of_birth %} value="{{ profile.date_of_birth|date:'Y-m-d' }}" {% endif %}>
+    <br><br>
+
+    <!-- Profile Photo -->
+    <label for="profile_photo">Profile Photo:</label>
+    <input type="file" id="profile_photo" name="profile_photo">
+    {% if profile.profile_photo %}
+        <br>
+        <img src="{{ profile.profile_photo.url }}" alt="Profile photo" width="100px">
+    {% endif %}
+    <br><br>
+
+    <!-- Marital Status -->
+    <label for="marital_status">Marital Status:</label>
+    <select name="marital_status" id="marital_status">
+        <option value="single" {% if profile.marital_status == "single" %}selected{% endif %}>Single</option>
+        <option value="married" {% if profile.marital_status == "married" %}selected{% endif %}>Married</option>
+    </select>
+    <br><br>
+
+    <!-- Job Title -->
+    <label for="job">Job Title:</label>
+    <input type="text" id="job" name="job" placeholder="Enter job title" {% if profile.job %} value="{{ profile.job }}" {% endif %}>
+    <br><br>
+
+    <!-- Monthly Income -->
+    <label for="monthly_income">Monthly Income:</label>
+    <input type="text" id="monthly_income" name="monthly_income" placeholder="Enter monthly income" {% if profile.monthly_income %} value="{{ profile.monthly_income }}" {% endif %}>
+    <br><br>
+
+    <!-- Company Name/Employer Name -->
+    <label for="employer_name">Company Name/Employer Name:</label>
+    <input type="text" id="employer_name" name="employer_name" placeholder="Enter company or employer name" {% if profile.employer_name %} value="{{ profile.employer_name }}" {% endif %}>
+    <br><br>
+
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock body %}

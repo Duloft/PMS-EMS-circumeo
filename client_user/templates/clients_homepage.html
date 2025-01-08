@@ -1,0 +1,8 @@
+<h1>Welcome {{request.tenant}} {{request.user}} </h1>
+
+<ul>
+    {% for data in employee_obj %}
+    <ol>{{data}} {% if data.role %}({{data.role}}){% endif %} </ol>
+    {% endfor %}
+</ul>
+    

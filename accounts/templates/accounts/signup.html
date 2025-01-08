@@ -1,0 +1,140 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block title %}Duloft | create an account{% endblock title %}
+
+{% block form_heading %}Sign Up{% endblock form_heading %}
+
+{% block form_contents %}
+<form method="post" class="signUpForm">
+    {% csrf_token %}
+        
+    <div class="doubleFields">
+        <!-- First Name -->
+        <div class="div">
+            <label for="signup_first_name">First Name <span class="error">*</span></label>
+            <input type="text" id="first_name" name="signup_firstname" placeholder="Enter Firstname" autocomplete="given-name">
+            <small id="error_first_name" class="error-message"></small>
+        </div>
+    
+        <!-- Last Name -->
+        <div class="div">
+            <label for="signup_last_name">Last Name <span class="error">*</span></label>
+            <input type="text" id="last_name" name="signup_lastname" placeholder="Enter Lastname" autocomplete="family-name">
+            <small id="error_last_name" class="error-message"></small>  
+        </div>
+    </div>
+
+    <!-- Username -->
+    <label for="signup_username">Username <span class="error">*</span></label>  
+    <input type="text" id="username" name="signup_username" placeholder="Enter Username" autocomplete="username">
+    <small id="error_username" class="error-message"></small>
+
+    <!-- Email -->
+    <label for="signup_email">Email <span class="error">*</span></label>
+    <input type="email" id="email" name="signup_email" placeholder="Enter Email" autocomplete="email">
+    <small id="error_email" class="error-message"></small>
+
+    <div class="doubleFields">
+        <!-- Password -->
+        <div class="div">
+            <label for="signup_password">Password <span class="error">*</span></label>
+            <div class="passwordInput" id="passwordContainer">
+                <input type="password" class="password" id="password" name="signup_password" placeholder="Enter Password" autocomplete="new-password">
+                <div class="showPasswordIcon"><img src="./icons/hide-password.png" alt="" id="showPasswordIcon"></div>
+            </div>
+            <small id="error_password" class="error-message"></small>
+        </div>
+    
+        <!-- Confirm Password -->
+        <div class="div">
+            <label for="signup_confirm_password">Confirm Password <span class="error">*</span></label>
+            <div class="passwordInput" id="conformPasswordContainer">
+                <input type="password" class="password" id="confirm_password" name="signup_confirm_password" placeholder="Re-enter Password" autocomplete="new-password">
+                <div class="showPasswordIcon"><img src="./icons/hide-password.png" alt="" id="showPasswordIcon"></div>
+            </div>
+            <small id="error_confirm_password" class="error-message"></small>
+        </div>
+    </div>
+    
+    <div class="agreement">
+        <div class="checkboxWrapper" >
+            <input type="checkbox" class="checkbox">
+        </div>
+        <small class="agreement-txt">I agree to the <a href="">Terms and Conditions</a> and <a href="">Privacy Policy</a></small>
+    </div>
+    <button type="submit" class="primary-btn">Sign Up</button>
+</form>
+
+<small>Already have an account? <a href="{% url 'signin' %}">Sign in</a></small>
+
+{% endblock form_contents %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends 'base.html' %}
+{% block title %}Duloft | Sign in{% endblock title %}
+
+
+{% block body %}
+    <h3>Signup</h3>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- First Name -->
+        <label for="signup_first_name">First Name*</label>
+        <input type="text" id="first_name" name="signup_firstname" placeholder="Enter Firstname" autocomplete="given-name">
+        <div id="error_first_name" class="error-message"></div>
+        <br>
+
+        <!-- Last Name -->
+        <label for="signup_last_name">Last Name*</label>
+        <input type="text" id="last_name" name="signup_lastname" placeholder="Enter Lastname" autocomplete="family-name">
+        <div id="error_last_name" class="error-message"></div>
+        <br>
+
+        <!-- Username -->
+        <label for="signup_username">Username*</label>
+        <input type="text" id="username" name="signup_username" placeholder="Enter Username" autocomplete="username">
+        <div id="error_username" class="error-message"></div>
+        <br>
+
+        <!-- Email -->
+        <label for="signup_email">Email*</label>
+        <input type="email" id="email" name="signup_email" placeholder="Enter Email" autocomplete="email">
+        <div id="error_email" class="error-message"></div>
+        <br>
+
+        <!-- Password -->
+        <label for="signup_password">Password*</label>
+        <input type="password" id="password" name="signup_password" placeholder="Enter Password" autocomplete="new-password">
+        <div id="error_password" class="error-message"></div>
+        <br>
+
+        <!-- Confirm Password -->
+        <label for="signup_confirm_password">Confirm Password*</label>
+        <input type="password" id="confirm_password" name="signup_confirm_password" placeholder="Enter Password again" autocomplete="new-password">
+        <div id="error_confirm_password" class="error-message"></div>
+        <br>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <br><small>Already have an account? <a href="">signin</a></small>
+
+{% endblock body %} {% endcomment %}

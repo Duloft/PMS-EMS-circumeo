@@ -1,0 +1,56 @@
+/* Mobile styles */  
+@media only screen and (max-width: 768px) {  
+
+    :root{
+        -webkit-tap-highlight-color: transparent;
+        -webkit-focus-ring-color: transparent;
+    }
+
+    .auth-page {
+        width: 100%;
+        height: fit-content;
+        display: block;
+        align-items: flex-start;
+        justify-content: flex-start;
+        background: none;
+
+    }
+
+    .auth-page .brand-sect{
+        padding: var(--spacing-s) var(--spacing-m);
+        padding-top: var(--spacing-xl);
+    }
+
+    .auth-page .brand-sect img{
+        width: 8rem;
+    }
+
+    .auth-page .brand-sect p{
+        display: none;
+    }
+
+    
+
+    /* Authentication form */
+
+    .form-sect {
+        width: 100%; 
+        min-height: fit-content;
+        background-color: white;
+        padding: var(--spacing-s) var(--spacing-m);
+        border-radius: 0rem;
+        box-shadow: none;
+    }
+
+    .doubleFields{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .doubleFields .div{
+        width: 100%;
+    }
+
+}

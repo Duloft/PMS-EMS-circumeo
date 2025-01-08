@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Plans</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Subscription Plans</h1>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+            {% for plan in sub_plan %}
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                <div class="p-6">
+                    <h2 class="text-2xl font-semibold mb-4">{{ plan.name }}</h2>
+                    <div class="space-y-3">
+                        <p><strong>Number of Users:</strong> {{ plan.no_users }}</p>
+                        
+                        {% if plan.no_properties %}
+                        <p><strong>Number of Properties:</strong> {{ plan.no_properties }}</p>
+                        {% endif %}
+                        
+                        {% if plan.no_units %}
+                        <p><strong>Number of Units:</strong> {{ plan.no_units }}</p>
+                        {% endif %}
+                        
+                        <p><strong>Duration:</strong> {{ plan.duration_in_days }} days</p>
+                        
+                        {% if plan.amount %}
+                        <p class="text-xl font-bold text-green-600">Price: ${{ plan.amount }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mt-6">
+                        <form action="{% url 'initiate_subscription_payment' plan.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label for="duration" class="block mb-2">Select Plan Duration(length)</label>
+                                <select name="duration" id="duration" class="w-full p-2 border rounded">
+                                    {% for duration_value, duration_label in plan_duration %}
+                                    <option value="{{ duration_value }}">{{ duration_label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300">
+                                Subscribe Now
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

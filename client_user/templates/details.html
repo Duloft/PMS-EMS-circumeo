@@ -1,0 +1,21 @@
+<div class="container">
+    <h1>{{ title }}</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">User Details</h5>
+            <p><strong>Username:</strong> {{ user.user.username }}</p>
+            <p><strong>Email:</strong> {{ user.user.email }}</p>
+            <p><strong>Role:</strong> {{ user.get_role_display }}</p>
+            <p><strong>Tenant:</strong> {{ user.tenant.name|default:"N/A" }}</p>
+            <p><strong>Phone:</strong> {{ user.phone_number|default:"N/A" }}</p>
+            <p><strong>Admin:</strong> {{ user.is_admin|yesno:"Yes,No" }}</p>
+            <p><strong>Created:</strong> {{ user.created_at }}</p>
+            <p><strong>Last Updated:</strong> {{ user.updated_at }}</p>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'client_users_list' %}" class="btn btn-secondary">Back to List</a>
+            <a href="{% url 'client_user_update' user.pk %}" class="btn btn-warning">Edit</a>
+            <a href="{% url 'client_user_delete' user.pk %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>

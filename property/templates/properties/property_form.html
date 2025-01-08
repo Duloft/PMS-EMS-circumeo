@@ -1,0 +1,55 @@
+<h1>{% if property_model %}Edit Property{% else %}Add Property{% endif %}</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" value="{{ property_model.title|default:'' }}">
+    <br>
+    <label for="address">Address:</label>
+    <input type="text" id="address" name="address" value="{{ property_model.address|default:'' }}">
+    <br>
+    <label for="country">Country:</label>
+    <input type="text" id="country" name="country" value="{{ property_model.country|default:'' }}">
+    <br>
+    <label for="state">State:</label>
+    <input type="text" id="state" name="state" value="{{ property_model.state|default:'' }}">
+    <br>
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city" value="{{ property_model.city|default:'' }}">
+    <br>
+    <label for="no_of_total_units">Total Units:</label>
+    <input type="number" id="no_of_total_units" name="no_of_total_units" value="{{ property_model.no_of_total_units|default:'' }}">
+    <br>
+    <label for="no_of_available_units">Available Units:</label>
+    <input type="number" id="no_of_available_units" name="no_of_available_units" value="{{ property_model.no_of_available_units|default:'' }}">
+    <br>
+    <label for="property_type">Property Type:</label>
+    <select id="property_type" name="property_type">
+        <option value="">-- Select Property Type --</option>
+        {% for property_type in property_types %}
+        <option value="{{ property_type.id }}" {% if property_model and property_model.property_type_id == property_type.id %}selected{% endif %}>
+            {{ property_type.name }}
+        </option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="manager">Manager:</label>
+    <select id="manager" name="manager">
+        <option value="">-- Select Manager --</option>
+        {% for manager in managers %}
+        <option value="{{ manager.id }}" {% if property_model and property_model.manager_id == manager.id %}selected{% endif %}>
+            {{ manager.full_name }}
+        </option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="list_property">List Property:</label>
+    <input type="checkbox" id="list_property" name="list_property" {% if property_model and property_model.list_property %}checked{% endif %}>
+    <br>
+    <label for="is_verified">Is Verified:</label>
+    <input type="checkbox" id="is_verified" name="is_verified" {% if property_model and property_model.is_verified %}checked{% endif %}>
+    <br>
+    <label for="featured">Featured:</label>
+    <input type="checkbox" id="featured" name="featured" {% if property_model and property_model.featured %}checked{% endif %}>
+    <br>
+    <button type="submit">Save</button>
+</form>

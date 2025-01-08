@@ -1,0 +1,11 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block title %}Duloft | Verify your email address{% endblock title %}
+
+{% block form_heading %}Thank you for signing up with Duloft.{% endblock form_heading %}
+
+{% block form_contents %}
+<p>
+    A verification link has been sent to {{user_email}}. Please check your inbox and spam folder and follow the link to complete your registration.
+</p>
+{% endblock form_contents %}

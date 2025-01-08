@@ -1,0 +1,21 @@
+{% load hosts %}
+<h1>Manage Images for {{ property_listing.property_model.name }}</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="name">Image Name:</label>
+    <input type="text" id="name" name="name">
+    <br>
+    <label for="image">Image:</label>
+    <input type="file" id="image" name="image" required>
+    <br>
+    <button type="submit">Add Image</button>
+</form>
+<ul>
+    {% for image in images %}
+    <li>
+        <img src="{{ image.image.url }}" alt="{{ image.name }}" style="max-width: 200px;">
+        {{ image.name }}
+    </li>
+    {% endfor %}
+</ul>
+<a href="{% host_url 'property_listing' host 'tenant' %}">Back to Properties</a>

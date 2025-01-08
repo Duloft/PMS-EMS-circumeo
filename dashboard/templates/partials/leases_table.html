@@ -1,0 +1,41 @@
+<!-- partials/leases_table.html -->
+{% if leases %}
+<div class="overflow-x-auto">
+    <table class="min-w-full">
+        <thead>
+            <tr>
+                <th class="px-4 py-2 text-left">Unit</th>
+                <th class="px-4 py-2 text-left">Start Date</th>
+                <th class="px-4 py-2 text-left">End Date</th>
+                <th class="px-4 py-2 text-left">Days Remaining</th>
+                <th class="px-4 py-2 text-left">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lease_data in leases %}
+            <tr>
+                <td class="border px-4 py-2">{{ lease_data.lease.unit_unique_id }}</td>
+                <td class="border px-4 py-2">{{ lease_data.lease.start_date|date:"M d, Y" }}</td>
+                <td class="border px-4 py-2">{{ lease_data.lease.end_date|date:"M d, Y" }}</td>
+                <td class="border px-4 py-2">
+                    <span class="px-2 py-1 rounded-full text-sm 
+                        {% if lease_data.days_remaining <= 30 %}bg-red-100 text-red-800
+                        {% elif lease_data.days_remaining <= 90 %}bg-yellow-100 text-yellow-800
+                        {% else %}bg-green-100 text-green-800{% endif %}">
+                        {{ lease_data.days_remaining }} days
+                    </span>
+                </td>
+                <td class="border px-4 py-2">
+                    <a href="{% url 'lease_details' schema_name=lease_data.schema_name lease_id=lease_data.lease.id %}" 
+                       class="text-blue-600 hover:text-blue-800">
+                        View Details
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p class="text-gray-600">No leases found.</p>
+{% endif %}

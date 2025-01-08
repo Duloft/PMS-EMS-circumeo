@@ -1,0 +1,193 @@
+{% load hosts %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Account Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .profile-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        .profile-header {
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .company-logo {
+            max-width: 200px;
+            max-height: 100px;
+            margin-bottom: 15px;
+        }
+        .profile-section {
+            margin-bottom: 25px;
+        }
+        .section-title {
+            border-bottom: 1px solid #d0d0d0;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .profile-field {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .profile-field label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .profile-field span {
+            color: #333;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .edit-button, .subdomain-button {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .edit-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+        .subdomain-button {
+            background-color: #3498db;
+            color: white;
+        }
+        .subdomain-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="/api/placeholder/200/100" alt="Company Logo" class="company-logo">
+            <h1>Client Account Profile</h1>
+        </div>
+
+        <div class="profile-section">
+            <h2 class="section-title">Personal Information</h2>
+            <div class="profile-grid">
+                <div class="profile-field">
+                    <label>First Name</label>
+                    <span>{{user.first_name}}</span>
+                </div>
+                <div class="profile-field">
+                    <label>Last Name</label>
+                    <span>{{user.last_name}}</span>
+                </div>
+                <div class="profile-field">
+                    <label>User</label>
+                    <span>{{user.username}}</span>
+                </div>
+                <div class="profile-field">
+                    <label>Recommended By</label>
+                    <span>{{user.account_profile.recommended_by}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <h2 class="section-title">Contact Information</h2>
+            <div class="profile-grid">
+                <div class="profile-field">
+                    <label>Email Address</label>
+                    <span>{{user.email}}</span>
+                </div>
+                <div class="profile-field">
+                    <label>Phone Number</label>
+                    <span>{% if user.account_profile.phone_number %}
+                        {{user.account_profile.phone_number}}
+                    {% else %}
+                    +1 (555) 123-4567
+                    {% endif %}</span>
+                </div>
+                <div class="profile-field">
+                    <label>Address</label>
+                    <span>{% if user.account_profile.address %}
+                        {{user.account_profile.address}}
+                    {% else %}
+                    123 Main Street, Anytown, USA 12345
+                    {% endif %} </span>
+                </div>
+                <div class="profile-field">
+                    <label>Domain Name</label>
+                    <span>{{user.account_profile.domain_name}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <h2 class="section-title">Account Details</h2>
+            <div class="profile-grid">
+                <div class="profile-field">
+                    <label>Account Type</label>
+                    <span>{{user.account_profile.account_type}}</span>
+                </div>
+                <div class="profile-field">
+                    <label>Account Name</label>
+                    <span>{{user.account_profile.account_name}}</span>
+                </div>
+                <div class="profile-field">
+                    <label>Shared ID</label>
+                    <span>{% if user.account_profile.shared_id %}
+                    {{user.account_profile.shared_id}}
+                    {% else %}
+                    JD-2024-001
+                    {% endif %}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            {% if USE_SUBDOMAIN_ROUTING %}
+            <a href="{% host_url 'update_client_profile' host 'account' %}" class="edit-button">Edit Profile</a>
+            {% if subdomain %}
+            <a href="{% host_url 'home' host 'tenant' subdomain_name=subdomain%}" class="subdomain-button">Go To Subdomain</a>
+            {% endif %}
+            {% else %}
+            <a href="{% url 'update_client_profile' %}" class="edit-button">Edit Profile</a>
+            {% if user.account_profile.domain_name %}
+            <a href="{{subdomain_url}}" class="subdomain-button">Go to Subdomain </a>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
