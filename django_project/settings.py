@@ -21,7 +21,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '.circumeo-apps.net', '.duloft.com']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.he7-resolute-darwin.circumeo-apps.net'
+    'https://*.d7k-adaptable-mendel.circumeo-apps.net'
     'https://*.property-manger.vercel.app',
     'https://*.duloft.com',
 ]
